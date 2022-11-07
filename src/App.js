@@ -9,36 +9,37 @@ import Draggable from "gsap/Draggable";
 gsap.registerPlugin(Draggable);
 
 function App() {
-    const [simulateLoading, setSimulateLoading] = React.useState("Loading Value")
+    const [simulateLoading, setSimulateLoading] = React.useState(true)
 
     const dragInstance = useRef(null);
     const dragTarget = useRef(null);
 
-    const simulateClick = setTimeout(() => {
-        setSimulateLoading(undefined)
+    setTimeout(() => {
+        setSimulateLoading(false)
     }, 3000)
 
     useEffect(() => {
         dragInstance.current = Draggable.create('.gallery', {
             inertia: true,
             bounds: 'body',
-            onClick: () => {
-                console.log("clicked");
+            onClick: (res) => {
+                console.log(res);
             }
         });
-    }, []);
+    }, [simulateLoading]);
 
     return (
         <>
-            {/*{simulateLoading ?*/}
-            {/*    <Preloader/> : <div ref={dragTarget}>*/}
-            {/*        <Site/>*/}
-            {/*    </div>*/}
-            {/*}*/}
+            {simulateLoading ?
+                <Preloader/> :
+                <div ref={dragTarget}>
+                    <Site/>
+                </div>
+            }
 
-            <div ref={dragTarget}>
-                <Site/>
-            </div>
+            {/*<div ref={dragTarget}>*/}
+            {/*    <Site/>*/}
+            {/*</div>*/}
         </>
     )
         ;
